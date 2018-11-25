@@ -6,7 +6,7 @@
 # WECHAT : 13811754531
 from django.conf import settings
 
-generator = getattr(settings, 'CAPTCHA_GENERATOR', 'captcha.generator.simple_generator')
+generator = getattr(settings, 'CAPTCHA_GENERATOR', 'captcha.DefaultGenerator')
 size = getattr(settings, 'CAPTCHA_SIZE', (100, 40))
 timeout = getattr(settings, 'CAPTCHA_TIMEOUT', 30)  # minutes
 length = getattr(settings, 'CAPTCHA_LENGTH', 4)

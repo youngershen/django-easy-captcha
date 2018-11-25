@@ -18,21 +18,31 @@ from decaptcha.settings import timeout, max_random_key, challenge
 
 class CaptchaRecord(models.Model):
     challenge = models.CharField(max_length=255, verbose_name=_('Chanllenge'))
-    hashkey = models.CharField(max_length=255, verbose_name=_('Hashkeys'))
+    hashkey = models.CharField(max_length=255, verbose_name=_('Hashkey'))
     timeout = models.DateTimeField(auto_now_add=True, verbose_name=_('Timeout'))
 
-    def generate(self):
-        self.challenge = self._get_challenge()
-        self.timeout = timezone.now() + datetime.timedelta(minutes=int(timeout))
+    @classmethod
+    def generate(cls):
+        challenge_ = cls._get_challenge()
+        timeout_ = timezone.now() + datetime.timedelta(minutes=int(timeout))
         key_ = (
                 smart_text(randrange(0, max_random_key)) +
                 smart_text(time.time()) +
-                smart_text(self.challenge, errors='ignore')
+                smart_text(challenge, errors='ignore')
             ).encode('utf8')
-        self.hashkey = hashlib.sha1(key_).hexdigest()
+        hashkey_ = hashlib.sha1(key_).hexdigest()
         del key_
-        self.save()
+        cls.objects.create(challenge=challenge_, hashkey=hashkey_, timeout=timeout_)
+        return challenge_, hashkey_
 
-    def _get_challenge(self):
-        func = import_module(challenge)
+    @staticmethod
+    def _get_challenge():
+        func = load_string(challenge)
         return func()
+
+
+def load_string(module_str):
+    m = module_str.split('.')
+    module = import_module('.'.join(m[:-1]))
+    ret = getattr(module, m[-1])
+    return ret

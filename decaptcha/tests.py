@@ -6,6 +6,7 @@
 # WECHAT : 13811754531
 from django.test import TestCase
 from decaptcha.models import CaptchaRecord
+from decaptcha.utils import get_captcha
 
 
 class DecaptchaTest(TestCase):
@@ -13,4 +14,11 @@ class DecaptchaTest(TestCase):
         pass
 
     def test_model(self):
-        pass
+        challenge = CaptchaRecord.generate()
+        print(challenge)
+        self.assertTrue(challenge)
+
+    def test_get_captcha(self):
+        key, image = get_captcha()
+        self.assertTrue(key)
+        self.assertTrue(image)

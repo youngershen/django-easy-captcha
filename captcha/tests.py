@@ -7,7 +7,7 @@
 # WEB : https://youngershen.com
 
 from django.test import TestCase
-from decaptcha.models import CaptchaRecord
+from captcha.models import CaptchaRecord
 
 
 class DecaptchaTest(TestCase):

@@ -6,11 +6,8 @@
 # WECHAT : 13811754531
 # WEB : https://youngershen.com
 
-from django.urls import path
-from decaptcha.views import captcha
+from django.apps import AppConfig
 
 
-urlpatterns = [
-    path('captcha', captcha, name='captcha'),
-]
-
+class AccountConfig(AppConfig):
+    name = 'captcha'

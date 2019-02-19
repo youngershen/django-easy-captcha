@@ -6,7 +6,8 @@
 # WECHAT : 13811754531
 # WEB : https://youngershen.com
 
-from decaptcha.models import CaptchaRecord, load_string
+from importlib import import_module
+
 from decaptcha.settings import generator, size
 
 
@@ -15,9 +16,8 @@ def get_generator():
     return generator_()
 
 
-def get_captcha():
-    challenge, key = CaptchaRecord.generate()
-    generator_ = get_generator()
-    image = generator_.make_captcha(challenge, image_size=size)
-    return key, image
-
+def load_string(module_str):
+    m = module_str.split('.')
+    module = import_module('.'.join(m[:-1]))
+    ret = getattr(module, m[-1])
+    return ret

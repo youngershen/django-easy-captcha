@@ -9,13 +9,14 @@
 import time
 import hashlib
 import datetime
-from importlib import import_module
 from random import randrange
 from django.utils import timezone
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.utils.encoding import smart_text
 from decaptcha.settings import timeout, max_random_key, challenge
+from decaptcha.utils import load_string, get_generator
+from decaptcha.settings import size
 
 
 class CaptchaRecord(models.Model):
@@ -37,14 +38,14 @@ class CaptchaRecord(models.Model):
         cls.objects.create(challenge=challenge_, hashkey=hashkey_, timeout=timeout_)
         return challenge_, hashkey_
 
+    def get_captcha(self):
+        c, k = self.generate()
+        generator_ = get_generator()
+        i = generator_.make_captcha(c, image_size=size)
+        return k, i
+
     @staticmethod
     def _get_challenge():
         func = load_string(challenge)
         return func()
 
-
-def load_string(module_str):
-    m = module_str.split('.')
-    module = import_module('.'.join(m[:-1]))
-    ret = getattr(module, m[-1])
-    return ret

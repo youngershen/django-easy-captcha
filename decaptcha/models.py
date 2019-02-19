@@ -25,6 +25,12 @@ class CaptchaRecord(models.Model):
     timeout = models.DateTimeField(auto_now_add=True, verbose_name=_('Timeout'))
 
     @classmethod
+    def match(cls, c, k):
+        now = timezone.now()
+        records = cls.objects.filter(challenge=c, hashkey=k, timeout__gte=now)
+        return records.exists()
+
+    @classmethod
     def generate(cls):
         challenge_ = cls._get_challenge()
         timeout_ = timezone.now() + datetime.timedelta(minutes=int(timeout))
@@ -38,8 +44,9 @@ class CaptchaRecord(models.Model):
         cls.objects.create(challenge=challenge_, hashkey=hashkey_, timeout=timeout_)
         return challenge_, hashkey_
 
-    def get_captcha(self):
-        c, k = self.generate()
+    @classmethod
+    def get_captcha(cls):
+        c, k = cls.generate()
         generator_ = get_generator()
         i = generator_.make_captcha(c, image_size=size)
         return k, i

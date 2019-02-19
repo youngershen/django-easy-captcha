@@ -8,7 +8,6 @@
 
 from django.test import TestCase
 from decaptcha.models import CaptchaRecord
-from decaptcha.utils import get_captcha
 
 
 class DecaptchaTest(TestCase):
@@ -20,6 +19,6 @@ class DecaptchaTest(TestCase):
         self.assertTrue(challenge)
 
     def test_get_captcha(self):
-        key, image = get_captcha()
+        key, image = CaptchaRecord.get_captcha()
         self.assertTrue(key)
         self.assertTrue(image)

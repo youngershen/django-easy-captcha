@@ -1,9 +1,11 @@
 # PROJECT : django-easy-captcha
 # TIME : 2018/11/25 16:47
 # AUTHOR : Younger Shen
-# EMAIL : youngershen64@gmail.com
+# EMAIL : younger.x.shen@gmail.com
 # CELL : 13811754531
 # WECHAT : 13811754531
+# WEB : https://youngershen.com
+
 from decaptcha.models import CaptchaRecord, load_string
 from decaptcha.settings import generator, size
 

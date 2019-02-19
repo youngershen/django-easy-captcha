@@ -5,6 +5,7 @@
 # CELL : 13811754531
 # WECHAT : 13811754531
 # WEB : https://youngershen.com
+
 from django.test import TestCase
 from decaptcha.models import CaptchaRecord
 from decaptcha.utils import get_captcha

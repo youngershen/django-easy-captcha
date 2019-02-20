@@ -6,29 +6,26 @@
 # WECHAT : 13811754531
 # WEB : https://youngershen.com
 
+from django.utils.translation import ugettext as _
 from django.urls import reverse
 from django.http import Http404
 from django.views.generic import View
-from django.http.response import JsonResponse, FileResponse
+from django.http.response import JsonResponse, HttpResponse
 from decaptcha.models import CaptchaRecord
+from decaptcha.validators import Captcha as CaptchaValidator
 
 
 class New(View):
     http_method_names = ['get']
 
     def get(self, request):
-        k, _ = self.captcha()
-        url = self.get_url(k)
-        json = {
-            'key': k,
-            'url': url
-        }
-        return JsonResponse(data=json)
+        data = self.captcha()
+        return JsonResponse(data=data)
 
-    @staticmethod
-    def captcha():
-        k, i = CaptchaRecord.get_captcha()
-        return k, i
+    def captcha(self):
+        _, k = CaptchaRecord.get_captcha()
+        url = self.get_url(k)
+        return {'key': k, 'url': url}
 
     @staticmethod
     def get_url(key):
@@ -37,9 +34,17 @@ class New(View):
 
 
 class Image(View):
+    http_method_names = ['get']
+
     def get(self, request, key):
+        return self.response(key)
+
+    def response(self, key):
         i = self.get_image(key)
-        return FileResponse(i)
+        response = HttpResponse(content_type='image/png')
+        response.write(i.read())
+        response['Content-length'] = i.tell()
+        return response
 
     @staticmethod
     def get_image(key):
@@ -52,13 +57,37 @@ class Image(View):
 
 
 class Match(View):
-    def get(self, request, key):
-        pass
+    http_method_names = ['get']
 
-    def get_image(self, key):
-        pass
+    def get(self, request):
+        status = self.match(request)
+
+        if status:
+            data = {
+                'status': 1,
+            }
+        else:
+            data = {
+                'status': 0,
+                'message': _('input code mismatch the challenge')
+            }
+
+        return JsonResponse(data=data)
+
+    @staticmethod
+    def match(request):
+        validator = CaptchaValidator(request.GET)
+        validator.validate()
+        if validator.status:
+            c = validator.get('challenge')
+            k = validator.get('hashkey')
+            return CaptchaRecord.match(c, k)
+        else:
+            return False
 
 
 new = New.as_view()
 image = Image.as_view()
 match = Match.as_view()
+
+

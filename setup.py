@@ -55,6 +55,7 @@ setup(
 
     install_requires=[
         'easy-captcha',
+        'django-easy-validator',
         'django'
     ],
 

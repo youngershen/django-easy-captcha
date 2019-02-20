@@ -3,4 +3,5 @@
 *.log
 *.idea
 venv
+django_easy_captcha.egg-info
 __pycache__

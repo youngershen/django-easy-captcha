@@ -7,10 +7,12 @@
 # WEB : https://youngershen.com
 
 from django.urls import path
-from decaptcha.views import captcha
+from decaptcha.views import new, image, match
 
 
 urlpatterns = [
-    path('captcha', captcha, name='captcha'),
+    path('new', new, name='new'),
+    path('image/<key>', image, name='image'),
+    path('match', match, name='match')
 ]
 

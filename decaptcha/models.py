@@ -56,3 +56,7 @@ class CaptchaRecord(models.Model):
         func = load_string(challenge)
         return func()
 
+    def get_image(self):
+        generator_ = get_generator()
+        i = generator_.make_captcha(self.challenge, image_size=size)
+        return i

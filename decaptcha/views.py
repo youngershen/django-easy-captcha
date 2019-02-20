@@ -13,6 +13,7 @@ from django.views.generic import View
 from django.http.response import JsonResponse, HttpResponse
 from decaptcha.models import CaptchaRecord
 from decaptcha.validators import Captcha as CaptchaValidator
+from decaptcha.settings import url_prefix
 
 
 class New(View):
@@ -29,7 +30,7 @@ class New(View):
 
     @staticmethod
     def get_url(key):
-        url = reverse('captcha:image', args=(key, ))
+        url = reverse('{PREFIX}:image'.format(PREFIX=url_prefix), args=(key, ))
         return url
 
 

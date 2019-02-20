@@ -8,7 +8,7 @@
 
 from django.views.generic import View
 from django.http.response import JsonResponse
-from captcha.models import CaptchaRecord
+from decaptcha.models import CaptchaRecord
 
 
 class Captcha(View):

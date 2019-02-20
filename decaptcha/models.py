@@ -14,9 +14,9 @@ from django.utils import timezone
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.utils.encoding import smart_text
-from captcha.settings import timeout, max_random_key, challenge
-from captcha.utils import load_string, get_generator
-from captcha.settings import size
+from decaptcha.settings import timeout, max_random_key, challenge
+from decaptcha.utils import load_string, get_generator
+from decaptcha.settings import size
 
 
 class CaptchaRecord(models.Model):

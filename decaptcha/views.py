@@ -65,11 +65,11 @@ class Match(View):
 
         if status:
             data = {
-                'status': 1,
+                'status': 0,
             }
         else:
             data = {
-                'status': 0,
+                'status': 1,
                 'message': _('input code mismatch the challenge')
             }
 

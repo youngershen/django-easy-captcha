@@ -1,0 +1,8 @@
+[run]
+include = decaptccha
+
+[report]
+include = decaptcha
+
+[html]
+directory = html

@@ -16,6 +16,7 @@ test:
 
 install:
   - pip install -e .
+  - pip install pymysql
   - pip install django-coverage
   - pip install django
   - pip install codecov

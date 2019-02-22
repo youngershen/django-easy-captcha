@@ -17,7 +17,7 @@ install:
   - pip install codecov
 
 before_script:
-  - python manager.py migrate
+  - django-admin migrate
 
 script:
   - pytest --cov-report=html --cov-config=.coveragerc  --cov=./

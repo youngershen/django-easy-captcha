@@ -10,7 +10,7 @@ before_install:
   - mysql -e 'CREATE DATABASE decaptcha;'
 
 test:
-  adapter: decaptcha
+  adapter: mysql
   database: "decaptcha"
   timeout: 500
 

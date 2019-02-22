@@ -20,10 +20,14 @@ install:
   - pip install django-coverage
   - pip install django
   - pip install codecov
+  - pip install coverage
 
 before_script:
   - python testproj/manage.py migrate
 
 script:
-  - python testproj/manage.py test decaptcha
+  - coverage run testproj/manage.py test decaptcha
 
+after_success:
+  - coverage xml
+  - codecov

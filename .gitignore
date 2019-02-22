@@ -2,6 +2,10 @@
 *.*~
 *.log
 *.idea
+.coverage
+coverage.xml
 venv
 django_easy_captcha.egg-info
 __pycache__
+build
+dist

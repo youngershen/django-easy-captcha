@@ -1,8 +1,8 @@
 [run]
-include = decaptccha
+include = decaptcha/*.py
 
 [report]
-include = decaptcha
+include = decaptcha/*.py
 
 [html]
 directory = html

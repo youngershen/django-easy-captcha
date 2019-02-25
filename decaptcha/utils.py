@@ -8,7 +8,7 @@
 
 from importlib import import_module
 
-from decaptcha.settings import generator, size
+from decaptcha.settings import generator
 
 
 def get_generator():

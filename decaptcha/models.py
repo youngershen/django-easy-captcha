@@ -63,3 +63,4 @@ class CaptchaRecord(models.Model):
         i.save(f, format='png')
         f.seek(0)
         return f
+

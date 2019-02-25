@@ -8,11 +8,12 @@
 
 from django.conf import settings
 
-generator = getattr(settings, 'CAPTCHA_GENERATOR', 'captcha.DefaultGenerator')
-size = getattr(settings, 'CAPTCHA_SIZE', (100, 40))
-timeout = getattr(settings, 'CAPTCHA_TIMEOUT', 10)  # minutes
-length = getattr(settings, 'CAPTCHA_LENGTH', 4)
-challenge = getattr(settings, 'CAPTCHA_CHALLENGE', 'decaptcha.challenges.random_char_challenge')
-url_prefix = getattr(settings, 'CAPTCHA_URL_PREFIX', 'captcha')
-max_random_key = getattr(settings, 'CAPTCHA_MAX_RANDOM_KEY', 18446744073709551616)  # 2 << 63
+generator = getattr(settings, 'DECAPTCHA_GENERATOR', 'captcha.DefaultGenerator')
+cookie_name = getattr(settings, 'DECAPTCHA_COOKIE_NAME', 'decaptcha')
+size = getattr(settings, 'DECAPTCHA_SIZE', (100, 40))
+timeout = getattr(settings, 'DECAPTCHA_TIMEOUT', 10)  # minutes
+length = getattr(settings, 'DECAPTCHA_LENGTH', 4)
+challenge = getattr(settings, 'DECAPTCHA_CHALLENGE', 'decaptcha.challenges.random_char_challenge')
+url_prefix = getattr(settings, 'DECAPTCHA_URL_PREFIX', 'captcha')
+max_random_key = getattr(settings, 'DECAPTCHA_MAX_RANDOM_KEY', 18446744073709551616)  # 2 << 63
 

@@ -13,7 +13,7 @@ from django.views.generic import View
 from django.http.response import JsonResponse, HttpResponse
 from decaptcha.models import CaptchaRecord
 from decaptcha.validators import Captcha as CaptchaValidator
-from decaptcha.settings import url_prefix
+from decaptcha.settings import url_prefix, cookie_name
 
 
 class New(View):
@@ -87,8 +87,18 @@ class Match(View):
             return False
 
 
+class Get(New, Image):
+    http_method_names = ['get']
+
+    def get(self, request):
+        data = self.captcha()
+        response = self.response(key=data['key'])
+        response.set_cookie(key=cookie_name, value=data['key'])
+        return response
+
+
 new = New.as_view()
 image = Image.as_view()
 match = Match.as_view()
-
+get = Get.as_view()
 

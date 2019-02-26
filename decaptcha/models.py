@@ -34,7 +34,6 @@ class CaptchaRecord(models.Model):
     def generate(cls):
         challenge_ = cls._get_challenge()
         timeout_ = timezone.now() + datetime.timedelta(minutes=int(timeout))
-        print(timeout_)
         key_ = (
                 smart_text(randrange(0, max_random_key)) +
                 smart_text(time.time()) +
@@ -57,7 +56,7 @@ class CaptchaRecord(models.Model):
 
     def get_image(self):
         generator_ = get_generator()
-        i = generator_.make_captcha(self.challenge, image_size=size)
+        i = generator_.make_captcha(self.challenge.upper(), image_size=size)
         from io import BytesIO
         f = BytesIO()
         i.save(f, format='png')

@@ -17,3 +17,4 @@ urlpatterns = [
     path('get', get, name='get')
 ]
 
+app_name = 'decaptcha'

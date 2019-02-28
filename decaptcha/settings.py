@@ -14,6 +14,6 @@ size = getattr(settings, 'DECAPTCHA_SIZE', (100, 40))
 timeout = getattr(settings, 'DECAPTCHA_TIMEOUT', 10)  # minutes
 length = getattr(settings, 'DECAPTCHA_LENGTH', 4)
 challenge = getattr(settings, 'DECAPTCHA_CHALLENGE', 'decaptcha.challenges.RandomSimpleChars')
-url_prefix = getattr(settings, 'DECAPTCHA_URL_PREFIX', 'captcha')
+url_prefix = getattr(settings, 'DECAPTCHA_URL_PREFIX', 'decaptcha')
 max_random_key = getattr(settings, 'DECAPTCHA_MAX_RANDOM_KEY', 18446744073709551616)  # 2 << 63
 

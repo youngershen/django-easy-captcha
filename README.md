@@ -48,23 +48,25 @@ Here are the settings within django-easy-captcha, must add the following line in
 
         default: 10
         type   : integer
-        choises: larger than 5
+        choises: bigger than 5
         descriptions: cause the challenge spawn and then store in the database , it has chance generated the
                       repeated challenge, so i set a timeout flag to control the gusses succeed rate.
                       
 * DECAPTCHA_LENGTH
 
-        default : 4
-        type: integer
-        chpises: larger than 4
-        descriptions:          
+        default: 4
+        type   : integer
+        choices: bigger than 4
+        descriptions: the length of the captcha challenge length, better bigger than 4.          
         
+* DECAPTCHA_CHALLENGE
 
-
-* length = getattr(settings, 'DECAPTCHA_LENGTH', 4)
-* challenge = getattr(settings, 'DECAPTCHA_CHALLENGE', 'decaptcha.challenges.random_char_challenge')
-* url_prefix = getattr(settings, 'DECAPTCHA_URL_PREFIX', 'captcha')
-* max_random_key = getattr(settings, DE'CAPTCHA_MAX_RANDOM_KEY', 18446744073709551616)  # 2 << 63
-
+        default: decaptcha.challenges.RandomSimpleChars
+        type   : string
+        choices: decaptcha.challenges.RandomSimpleChars, decaptcha.challenges.RandomChars
+        descriptions: the challenge generator defines how the systemd get challenge code,
+                      the package provide 2 kind of generator, and you could custom your 
+                      own generator too, just follow [this](#)
+                     
 
 cookie_name = getattr(settings, 'DECAPTCHA_COOKIE_NAME', 'decaptcha')

@@ -16,3 +16,28 @@ def random_char_challenge():
         ret += random.choice(chars)
     return ret
 
+
+class Base:
+    name = 'base'
+
+    def __index__(self):
+        self.length = settings.length
+
+    def get(self):
+        raise NotImplemented
+
+
+class RandomSimpleChars(Base):
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
+
+    def get(self):
+        ret = []
+        for i in range(self.length):
+            ret.append(random.choices(self.chars))
+
+        return ''.join(ret).strip()
+
+
+class RandomChars(RandomSimpleChars):
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789' \
+            '<>?}{+-*/!@#$%^&()_='

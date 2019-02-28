@@ -67,5 +67,4 @@ Here are the settings within django-easy-captcha, must add the following line in
 * max_random_key = getattr(settings, DE'CAPTCHA_MAX_RANDOM_KEY', 18446744073709551616)  # 2 << 63
 
 
-Bear Kid Homebrew Gaming Studio
-熊孩子家酿游戏工作室
+cookie_name = getattr(settings, 'DECAPTCHA_COOKIE_NAME', 'decaptcha')

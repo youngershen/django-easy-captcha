@@ -10,13 +10,6 @@ import random
 from decaptcha import settings
 
 
-def random_char_challenge():
-    chars, ret = 'abcdefghijklmnopqrstuvwxyz', ''
-    for i in range(settings.length):
-        ret += random.choice(chars)
-    return ret
-
-
 class Base:
     name = 'base'
 

@@ -7,27 +7,26 @@
 # WEB : https://youngershen.com
 
 import random
+from functools import reduce
 from decaptcha import settings
 
 
 class Base:
     name = 'base'
+    length = settings.length
 
-    def __index__(self):
-        self.length = settings.length
-
-    def get(self):
+    @classmethod
+    def get(cls):
         raise NotImplemented
 
 
 class RandomSimpleChars(Base):
     chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
-    def get(self):
-        ret = []
-        for i in range(self.length):
-            ret.append(random.choices(self.chars))
-
+    @classmethod
+    def get(cls):
+        ret = reduce(lambda x, y: x+y,
+                     [str(random.choice(cls.chars)) for _ in range(cls.length)])
         return ''.join(ret).strip()
 
 

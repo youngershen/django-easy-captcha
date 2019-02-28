@@ -51,8 +51,8 @@ class CaptchaRecord(models.Model):
 
     @staticmethod
     def _get_challenge():
-        func = load_string(challenge)
-        return func()
+        clazz = load_string(challenge)
+        return clazz.get()
 
     def get_image(self):
         generator_ = get_generator()

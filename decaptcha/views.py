@@ -17,9 +17,9 @@ from decaptcha.settings import url_prefix, cookie_name
 
 
 class New(View):
-    http_method_names = ['get']
+    http_method_names = ['post']
 
-    def get(self, request):
+    def post(self, request):
         data = self.captcha()
         return JsonResponse(data=data)
 
@@ -58,9 +58,9 @@ class Image(View):
 
 
 class Match(View):
-    http_method_names = ['get']
+    http_method_names = ['post']
 
-    def get(self, request):
+    def post(self, request):
         status = self.match(request)
 
         if status:
@@ -75,9 +75,8 @@ class Match(View):
 
         return JsonResponse(data=data)
 
-    @staticmethod
-    def match(request):
-        validator = CaptchaValidator(request.GET)
+    def match(self, request):
+        validator = CaptchaValidator(self.data(request))
         validator.validate()
         if validator.status:
             c = validator.get('challenge')
@@ -86,11 +85,25 @@ class Match(View):
         else:
             return False
 
+    @staticmethod
+    def data(request):
+        challenge = request.POST.get('challenge', None)
+        hashkey = request.POST.get('hashkey', None)
+
+        if not hashkey:
+            cookie = request.cookies[cookie_name]
+            hashkey = cookie.value
+
+        return {
+            'challenge': challenge,
+            'hashkey': hashkey
+        }
+
 
 class Get(New, Image):
     http_method_names = ['get']
 
-    def get(self, request):
+    def get(self, request, key=None):
         data = self.captcha()
         response = self.response(key=data['key'])
         response.set_cookie(key=cookie_name, value=data['key'])

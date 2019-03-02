@@ -8,7 +8,7 @@
 
 from django.urls import reverse
 from django.test import TestCase
-from decaptcha.settings import url_prefix
+from decaptcha.settings import url_prefix, cookie_name
 from decaptcha.models import CaptchaRecord
 
 
@@ -16,6 +16,7 @@ class DecaptchaTest(TestCase):
     def setUp(self):
         self.url_new = reverse('{PREFIX}:new'.format(PREFIX=url_prefix))
         self.url_match = reverse('{PREFIX}:match'.format(PREFIX=url_prefix))
+        self.url_get = reverse('{PREFIX}:get'.format(PREFIX=url_prefix))
 
     def test_model(self):
         challenge = CaptchaRecord.generate()
@@ -27,7 +28,7 @@ class DecaptchaTest(TestCase):
         self.assertTrue(record.exists())
 
     def test_url_new(self):
-        response = self.client.get(self.url_new)
+        response = self.client.post(self.url_new)
         self.assertTrue(response)
 
         data = response.json()
@@ -45,16 +46,23 @@ class DecaptchaTest(TestCase):
 
     def test_url_match(self):
         challenge, hashkey = CaptchaRecord.get_captcha()
-        response = self.client.get(self.url_match, data={
+        response = self.client.post(self.url_match, data={
             'challenge': challenge,
             'hashkey': hashkey
         })
 
         self.assertEqual(response.json()['status'], 0)
 
-        response = self.client.get(self.url_match, data={
+        response = self.client.post(self.url_match, data={
             'challenge': challenge,
             'hashkey': 'foo'
         })
 
         self.assertEqual(response.json()['status'], 1)
+
+    def test_url_get(self):
+        response = self.client.get(self.url_get)
+        k1 = response.cookies[cookie_name]
+        k2 = CaptchaRecord.objects.all().order_by('-id')[0].hashkey
+        self.assertEqual(k1.value, k2)
+

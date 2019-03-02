@@ -69,4 +69,20 @@ Here are the settings within django-easy-captcha, must add the following line in
                       own generator too, just follow [this](#)
                      
 
-cookie_name = getattr(settings, 'DECAPTCHA_COOKIE_NAME', 'decaptcha')
+* DECAPTCHA_COOKIE_NAME
+    
+        default: decaptcha
+        type   : string
+        choices: any string
+        description: this string defines the cookie name of captcha hashkey, in match
+        method you can put the hashkey in get parameter or get it from cookie
+
+ 
+### URLs
+
+## Advance Topics
+
+### Custom Challenge Generator
+
+### Cusom Captcha Generator
+

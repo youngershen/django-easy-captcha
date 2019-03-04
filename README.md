@@ -22,6 +22,14 @@ it is another choise for developers(mostly you maybe make your own library) or j
 
 ## Usage
 
+### Install
+
+1. run **pip install django-easy-captcha** or download the source code and run **python setup.py install**
+
+2. append the **decaptcha** to **INSTALLED_APPS**.
+
+3. run **python manage.py migrate** to sync the database.
+
 ### Settings
 
 Here are the settings within django-easy-captcha, must add the following line in your django's settings.py file.

@@ -31,6 +31,18 @@ class CaptchaRecord(models.Model):
         return records.exists()
 
     @classmethod
+    def get_expired_records(cls):
+        now = timezone.now()
+        records = cls.objects.filter(timeout__lte=now)
+        return records
+
+    @classmethod
+    def delete_expired_records(cls):
+        records = cls.get_expired_records()
+        if records:
+            records.delete()
+
+    @classmethod
     def generate(cls):
         challenge_ = cls._get_challenge()
         timeout_ = timezone.now() + datetime.timedelta(minutes=int(timeout))

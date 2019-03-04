@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 setup(
     name='django-easy-captcha',
 
-    version='0.1',
+    version='1.0',
 
     description='a very easy to use captcha image generator for django.',
 
@@ -29,7 +29,7 @@ setup(
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        'Development Status :: 1 - Planning',
+        'Development Status :: 5 - Production/Stable',
 
         # Indicate who your project is intended for
         'Intended Audience :: Developers',

@@ -28,7 +28,18 @@ it is another choise for developers(mostly you maybe make your own library) or j
 
 2. append the **decaptcha** to **INSTALLED_APPS**.
 
-3. run **python manage.py migrate** to sync the database.
+3. add **path('captcha/', include('decaptcha.urls'))** to your urls.py
+
+4. run **python manage.py migrate** to sync the database.
+
+### Management Commands
+
+* **decpatcha_purge** 
+
+        python manage.py decaptcha_purge
+        
+        this command has no parameter, and it is just for deleting the expired captcha records in database.
+        
 
 ### Settings
 
@@ -87,6 +98,46 @@ Here are the settings within django-easy-captcha, must add the following line in
 
  
 ### URLs
+
+* /captcha/new
+    
+        method: POST
+        parameters: None
+        response: JSON
+        sample  : {'key': k, 'url': url}
+        description: this method generated the key and captcha image url to json response, 
+                     could useful in ajax situlation.
+                      
+* /captcha/image
+
+        method: GET
+        parameters: /captcha/image/892d9c60e0347bc3eb7d7028f4c3c1eef6181af3
+        response: image/png
+        description: this method get image from server, you should user
+                     the hashkey you got in **new** method as parameters.
+                     
+* /captcha/match
+        
+        method: POST
+        parameters : 
+            challenge : string, not null. 
+            hashkey   : string, not null.
+
+        responsse: JSON
+        description: this method for validate the user input challenge,
+                     **challenge** is the user input code, 
+                     **hashkey** is the hashkey you got when generate the captcha.
+        
+* /captcha/get
+    
+        method: GET
+        parameters : None
+        response: image/png
+        description: this method direct get the image captcha 
+                     the hashkey save to the cookies, but you
+                     do not need care about the hashkey, for 
+                     detail just read the source code.
+
 
 ## Advance Topics
 

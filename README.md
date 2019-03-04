@@ -143,5 +143,12 @@ Here are the settings within django-easy-captcha, must add the following line in
 
 ### Custom Challenge Generator
 
-### Cusom Captcha Generator
+to make a custom challenge generator is very easy, just check the code in decaptcha/challenge.py, subclass the Base
+class then simplement the class method **get**, this method just return the string you want.
 
+when you custom your own challenge generator, you also should change the **DECAPTCHA_CHALLENGE** in settings.py
+
+### Custom Captcha image Generator
+
+if you want to make your own captcha image generator, you should read the docs [here](https://github.com/youngershen/easy-captcha#custom-captcha-generator), and follow
+the guide.

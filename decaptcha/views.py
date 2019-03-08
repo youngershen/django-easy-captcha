@@ -91,8 +91,7 @@ class Match(View):
         hashkey = request.POST.get('hashkey', None)
 
         if not hashkey:
-            cookie = request.cookies[cookie_name]
-            hashkey = cookie.value
+            hashkey = request.COOKIES[cookie_name]
 
         return {
             'challenge': challenge,

@@ -66,9 +66,10 @@ class CaptchaRecord(models.Model):
         clazz = load_string(challenge)
         return clazz.get()
 
-    def get_image(self):
+    def get_image(self, s=None):
+        s = s if s else size
         generator_ = get_generator()
-        i = generator_.make_captcha(self.challenge.upper(), image_size=size)
+        i = generator_.make_captcha(self.challenge.upper(), image_size=s)
         from io import BytesIO
         f = BytesIO()
         i.save(f, format='png')

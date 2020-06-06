@@ -40,21 +40,21 @@ class Image(View):
     def get(self, request, key):
         return self.response(key)
 
-    def response(self, key):
-        i = self.get_image(key)
+    def response(self, key, size=None):
+        i = self.get_image(key, size)
         response = HttpResponse(content_type='image/png')
         response.write(i.read())
         response['Content-length'] = i.tell()
         return response
 
     @staticmethod
-    def get_image(key):
+    def get_image(key, size=None):
         try:
             record = CaptchaRecord.objects.get(hashkey=key)
         except CaptchaRecord.DoesNotExist:
             raise Http404()
         else:
-            return record.get_image()
+            return record.get_image(size)
 
 
 class Match(View):
@@ -104,9 +104,26 @@ class Get(New, Image):
 
     def get(self, request, key=None):
         data = self.captcha()
-        response = self.response(key=data['key'])
+        response = self.response(key=data['key'], size=self.get_size())
         response.set_cookie(key=cookie_name, value=data['key'])
         return response
+
+    def get_size(self):
+        width = self.request.GET.get('width')
+        height = self.request.GET.get('height')
+
+        if width and height:
+            try:
+                width = int(width)
+                height = int(height)
+            except ValueError:
+                size = None
+            else:
+                size = (width, height)
+        else:
+            size = None
+
+        return size
 
 
 new = New.as_view()

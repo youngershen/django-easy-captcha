@@ -5,7 +5,7 @@
 # CELL : 13811754531
 # WECHAT : 13811754531
 # WEB : https://youngershen.com
-
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 from django.urls import reverse
 from django.http import Http404
@@ -126,8 +126,8 @@ class Get(New, Image):
         return size
 
 
-new = New.as_view()
+new = csrf_exempt(New.as_view())
+match = csrf_exempt(Match.as_view())
 image = Image.as_view()
-match = Match.as_view()
 get = Get.as_view()
 
